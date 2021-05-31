@@ -131,10 +131,8 @@ variable "cf_max_ttl" {
 
 variable "cf_geo_restrictions" {
   description = "Map for restriction"
-  type = map
-  default = {
-    restriction_type = "none"
-  }
+  type = any
+  default = {}
 }
 
 ### logging
