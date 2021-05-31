@@ -135,9 +135,7 @@ resource "aws_acm_certificate_validation" "validation" {
 
 resource "aws_cloudfront_origin_access_identity" "cf-identity" {
   count = var.module_enabled ? 1 : 0
-
-  comment = "CF identity"
-
+  comment = var.cf_origin_access_identity_comment
   depends_on = var.module_depends_on
 }
 
@@ -184,8 +182,8 @@ resource "aws_cloudfront_distribution" "website" {
 
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.certificate.arn
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2019"
+    ssl_support_method       = var.cf_ssl_support_method
+    minimum_protocol_version = var.cf_minimum_protocol_version
   }
 
   logging_config {

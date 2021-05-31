@@ -15,7 +15,6 @@ variable "hostname" {
 }
 
 # COMMON
-
 variable "module_enabled" {
   type        = bool
   description = "Whether to create resources within the module or not. Default is true."
@@ -99,7 +98,7 @@ variable "cf_cached_methods" {
 }
 
 variable "cf_viewer_protocol_policy" {
-  description = "Protocol policy"
+  description = "CloudFront viewer protocol policy"
   type        = string
   default     = "redirect-to-https"
 }
@@ -145,11 +144,32 @@ variable "cf_logging_bucket" {
 variable "cf_logging_prefix" {
   description = "Prefix for storing logs"
   type        = string
+  default = ""
 }
 
 variable "cf_include_cookies" {
   description = "Enabled cookies in logging"
   type        = bool
   default     = false
+}
+
+## Certificate
+variable "cf_minimum_protocol_version" {
+  description = "Minimum protocol version for SSL"
+  type = string
+  default = "TLSv1.2_2019"
+}
+
+variable "cf_ssl_support_method" {
+  description = "SSL support method for CloudFront"
+  type = string
+  default = "sni-only"
+}
+
+# CloudFront Origin
+variable "cf_origin_access_identity_comment" {
+  description = "Comment for CloudFront Identity"
+  type = string
+  default = ""
 }
 
