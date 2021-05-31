@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "bucket" {
     "Name" = replace(local.fqdn, ".", "-")
   }
 
-  depends_on = var.module_depends_on
+  depends_on = [var.module_depends_on]
 }
 
 data "aws_iam_policy_document" "s3_policy" {
@@ -62,7 +62,7 @@ resource "aws_s3_bucket_policy" "s3_policy_attach" {
   count = var.module_enabled ? 1 : 0
   bucket = aws_s3_bucket.bucket.id
   policy = data.aws_iam_policy_document.s3_policy.json
-  depends_on = var.module_depends_on
+  depends_on = [var.module_depends_on]
 }
 
 resource "aws_s3_bucket_public_access_block" "bucket_block_public" {
@@ -103,7 +103,7 @@ resource "aws_acm_certificate" "certificate" {
   domain_name               = local.fqdn
   subject_alternative_names = [format("*.%s", local.fqdn)]
   validation_method         = "DNS"
-  depends_on = var.module_depends_on
+  depends_on = [var.module_depends_on]
 }
 
 ## SSL certificate validation
@@ -136,7 +136,7 @@ resource "aws_acm_certificate_validation" "validation" {
 resource "aws_cloudfront_origin_access_identity" "cf-identity" {
   count = var.module_enabled ? 1 : 0
   comment = var.cf_origin_access_identity_comment
-  depends_on = var.module_depends_on
+  depends_on = [var.module_depends_on]
 }
 
 resource "aws_cloudfront_distribution" "website" {
@@ -196,7 +196,7 @@ resource "aws_cloudfront_distribution" "website" {
     Name = local.fqdn
   }
 
-  depends_on = var.module_depends_on
+  depends_on = [var.module_depends_on]
 
 }
 
@@ -213,6 +213,6 @@ resource "aws_route53_record" "alias" {
     zone_id                = aws_cloudfront_distribution.website.hosted_zone_id
   }
 
-  depends_on = var.module_depends_on
+  depends_on = [var.module_depends_on]
 
 }

@@ -24,7 +24,7 @@ variable "module_enabled" {
 variable "module_depends_on" {
   description = "List of resources which module depends on"
   type = list(string)
-  default = [""]
+  default = []
 }
 
 ## S3
