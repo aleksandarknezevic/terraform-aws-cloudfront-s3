@@ -179,8 +179,8 @@ resource "aws_cloudfront_distribution" "website" {
       for_each = [var.cf_geo_restrictions]
 
       content {
-        restriction_type = lookup(geo_restrictions.value, "restriction_type", "none")
-        locations        = lookup(geo_restrictions.value, "locations", [])
+        restriction_type = lookup(geo_restriction.value, "restriction_type", "none")
+        locations        = lookup(geo_restriction.value, "locations", [])
       }
     }
   }
