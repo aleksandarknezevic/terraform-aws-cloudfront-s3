@@ -129,10 +129,12 @@ variable "cf_max_ttl" {
 
 ### Restrictions
 
-variable "cf_restricted_countries" {
-  description = "List of countries for restriction"
-  type        = list(string)
-  default     = []
+variable "cf_geo_restrictions" {
+  description = "Map for restriction"
+  type = map
+  default = {
+    restriction_type = "none"
+  }
 }
 
 ### logging

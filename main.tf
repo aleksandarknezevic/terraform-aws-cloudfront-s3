@@ -173,10 +173,15 @@ resource "aws_cloudfront_distribution" "website" {
     }
   }
 
+
   restrictions {
-    geo_restriction {
-      restriction_type = "blacklist"
-      locations        = var.cf_restricted_countries
+    dynamic "geo_restriction" {
+      for_each = [var.cf_geo_restrictions]
+
+      content {
+        restriction_type = lookup(geo_restrictions.value, "restriction_type", "none")
+        locations        = lookup(geo_restrictions.value, "locations", [])
+      }
     }
   }
 
