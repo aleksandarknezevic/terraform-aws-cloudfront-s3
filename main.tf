@@ -59,14 +59,14 @@ data "aws_iam_policy_document" "s3_policy" {
 }
 
 resource "aws_s3_bucket_policy" "s3_policy_attach" {
-  count = var.module_enabled ? 1 : 0
+
   bucket = aws_s3_bucket.bucket.id
   policy = data.aws_iam_policy_document.s3_policy.json
   depends_on = [var.module_depends_on]
 }
 
 resource "aws_s3_bucket_public_access_block" "bucket_block_public" {
-  count = var.module_enabled ? 1 : 0
+
   bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = true
@@ -99,7 +99,7 @@ data "aws_route53_zone" "zone" {
 
 # SSL certificate
 resource "aws_acm_certificate" "certificate" {
-  count = var.module_enabled ? 1 : 0
+
   domain_name               = local.fqdn
   subject_alternative_names = [format("*.%s", local.fqdn)]
   validation_method         = "DNS"
@@ -134,13 +134,13 @@ resource "aws_acm_certificate_validation" "validation" {
 # CloudFront
 
 resource "aws_cloudfront_origin_access_identity" "cf-identity" {
-  count = var.module_enabled ? 1 : 0
+
   comment = var.cf_origin_access_identity_comment
   depends_on = [var.module_depends_on]
 }
 
 resource "aws_cloudfront_distribution" "website" {
-  count = var.module_enabled ? 1 : 0
+
   enabled             = var.cf_enabled
   is_ipv6_enabled     = var.cf_is_ipv6_enabled
   default_root_object = var.s3_index_document
