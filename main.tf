@@ -17,8 +17,9 @@ locals {
   }
 }
 
-# S3 buckets
+# S3 bucket
 resource "aws_s3_bucket" "bucket" {
+  count = var.module_enabled ? 1 : 0
   bucket = replace(local.fqdn, ".", "-")
   acl    = var.s3_acl
 
@@ -41,9 +42,11 @@ resource "aws_s3_bucket" "bucket" {
   tags = {
     "Name" = replace(local.fqdn, ".", "-")
   }
+
+  depends_on = var.module_depends_on
 }
 
-data "aws_iam_policy_document" "s3-policy" {
+data "aws_iam_policy_document" "s3_policy" {
   statement {
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.bucket.arn}/*"]
@@ -55,18 +58,22 @@ data "aws_iam_policy_document" "s3-policy" {
   }
 }
 
-resource "aws_s3_bucket_policy" "s3-policy-attach" {
+resource "aws_s3_bucket_policy" "s3_policy_attach" {
+  count = var.module_enabled ? 1 : 0
   bucket = aws_s3_bucket.bucket.id
-  policy = data.aws_iam_policy_document.s3-policy.json
+  policy = data.aws_iam_policy_document.s3_policy.json
+  depends_on = var.module_depends_on
 }
 
-resource "aws_s3_bucket_public_access_block" "bucket-block-public" {
+resource "aws_s3_bucket_public_access_block" "bucket_block_public" {
+  count = var.module_enabled ? 1 : 0
   bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+
 }
 
 ## Upload files
@@ -81,6 +88,7 @@ resource "aws_s3_bucket_object" "website" {
   tags = {
     "Name" = each.value
   }
+  depends_on = [aws_s3_bucket.bucket]
 }
 
 # Get route53 zone_id
@@ -91,9 +99,11 @@ data "aws_route53_zone" "zone" {
 
 # SSL certificate
 resource "aws_acm_certificate" "certificate" {
+  count = var.module_enabled ? 1 : 0
   domain_name               = local.fqdn
   subject_alternative_names = [format("*.%s", local.fqdn)]
   validation_method         = "DNS"
+  depends_on = var.module_depends_on
 }
 
 ## SSL certificate validation
@@ -111,20 +121,28 @@ resource "aws_route53_record" "validation" {
   ttl             = 60
   type            = each.value.type
   zone_id         = data.aws_route53_zone.zone.id
+
+  depends_on = [aws_acm_certificate.certificate]
 }
 
 resource "aws_acm_certificate_validation" "validation" {
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
+  depends_on = [aws_acm_certificate.certificate]
 }
 
 # CloudFront
 
 resource "aws_cloudfront_origin_access_identity" "cf-identity" {
+  count = var.module_enabled ? 1 : 0
+
   comment = "CF identity"
+
+  depends_on = var.module_depends_on
 }
 
 resource "aws_cloudfront_distribution" "website" {
+  count = var.module_enabled ? 1 : 0
   enabled             = var.cf_enabled
   is_ipv6_enabled     = var.cf_is_ipv6_enabled
   default_root_object = var.s3_index_document
@@ -180,6 +198,8 @@ resource "aws_cloudfront_distribution" "website" {
     Name = local.fqdn
   }
 
+  depends_on = var.module_depends_on
+
 }
 
 # Route53 record
@@ -194,4 +214,7 @@ resource "aws_route53_record" "alias" {
     name                   = aws_cloudfront_distribution.website.domain_name
     zone_id                = aws_cloudfront_distribution.website.hosted_zone_id
   }
+
+  depends_on = var.module_depends_on
+
 }

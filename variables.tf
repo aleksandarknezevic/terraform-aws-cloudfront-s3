@@ -14,6 +14,19 @@ variable "hostname" {
   description = "hostname for website without domain"
 }
 
+# COMMON
+
+variable "module_enabled" {
+  type        = bool
+  description = "Whether to create resources within the module or not. Default is true."
+  default     = true
+}
+
+variable "module_depends_on" {
+  description = "List of resources which module depends on"
+  type = list(string)
+  default = []
+}
 
 ## S3
 variable "s3_index_document" {
