@@ -19,7 +19,7 @@ locals {
 
 # S3 bucket
 resource "aws_s3_bucket" "bucket" {
-  count = var.module_enabled ? 1 : 0
+
   bucket = replace(local.fqdn, ".", "-")
   acl    = var.s3_acl
 
