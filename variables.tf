@@ -1,19 +1,19 @@
 # AWS
 
 variable "domain_name" {
-  type        = string
   description = "The domain name for the website."
+  type        = string
 }
 
 variable "hostname" {
-  type        = string
   description = "hostname for website without domain"
+  type        = string
 }
 
 # COMMON
 variable "module_enabled" {
-  type        = bool
   description = "Whether to create resources within the module or not. Default is true."
+  type        = bool
   default     = true
 }
 
@@ -26,29 +26,30 @@ variable "module_depends_on" {
 ## S3
 
 variable "s3_region" {
-  type = string
   description = "Region for backend S3 backend"
+  type = string
 }
+
 variable "s3_index_document" {
-  type        = string
   description = "File in bucket which should be index page"
+  type        = string
   default     = "index.html"
 }
 
 variable "s3_acl" {
-  type        = string
   description = "ACL for bucket. Possible values: private, public-read, public-read-write, aws-exec-read, authenticated-read, and log-delivery-write"
+  type        = string
   default     = "public-read"
 }
 
 variable "s3_upload_files_path" {
-  type        = string
   description = "Path to the folder with files for uploading to the s3 bucket"
+  type        = string
 }
 
 variable "s3_versioning" {
-  type        = bool
   description = "Whether to enable versioning on S3 or not. Default is true"
+  type        = bool
   default     = true
 }
 
