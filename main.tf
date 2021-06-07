@@ -98,7 +98,7 @@ data "aws_route53_zone" "zone" {
 
 # SSL certificate
 resource "aws_acm_certificate" "certificate" {
-
+  provider = "aws.virginia"
   domain_name               = local.fqdn
   subject_alternative_names = [format("*.%s", local.fqdn)]
   validation_method         = "DNS"
