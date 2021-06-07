@@ -1,8 +1,4 @@
 # AWS
-variable "aws_region" {
-  type        = string
-  description = "AWS Profile"
-}
 
 variable "domain_name" {
   type        = string
@@ -34,27 +30,15 @@ variable "s3_index_document" {
   default     = "index.html"
 }
 
-variable "s3_error_document" {
-  type        = string
-  description = "File in bucket which should be error page"
-  default     = "error.html"
-}
-
 variable "s3_acl" {
   type        = string
   description = "ACL for bucket. Possible values: private, public-read, public-read-write, aws-exec-read, authenticated-read, and log-delivery-write"
-  //  default     = "public-read"
+  default     = "public-read"
 }
 
 variable "s3_upload_files_path" {
   type        = string
   description = "Path to the folder with files for uploading to the s3 bucket"
-}
-
-variable "s3_max_age_seconds" {
-  type        = number
-  description = "Max age second for cors rules in S3 bucket"
-  default     = 3000
 }
 
 variable "s3_versioning" {
@@ -63,7 +47,7 @@ variable "s3_versioning" {
   default     = true
 }
 
-## Cloudfront
+## CloudFront
 
 variable "cf_enabled" {
   description = "Whether if cf is enabled"
