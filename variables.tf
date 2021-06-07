@@ -24,6 +24,11 @@ variable "module_depends_on" {
 }
 
 ## S3
+
+variable "s3_region" {
+  type = string
+  description = "Region for backend S3 backend"
+}
 variable "s3_index_document" {
   type        = string
   description = "File in bucket which should be index page"
