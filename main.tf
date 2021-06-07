@@ -28,7 +28,7 @@ resource "aws_s3_bucket" "bucket" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = var.s3_prevent_destroy
   }
 
   server_side_encryption_configuration {
