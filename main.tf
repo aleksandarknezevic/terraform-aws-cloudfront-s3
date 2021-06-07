@@ -22,7 +22,6 @@ resource "aws_s3_bucket" "bucket" {
 
   bucket = replace(local.fqdn, ".", "-")
   acl    = var.s3_acl
-  region = var.s3_region
   versioning {
     enabled = var.s3_versioning
   }
