@@ -53,12 +53,6 @@ variable "s3_versioning" {
   default     = true
 }
 
-variable "s3_prevent_destroy" {
-  description = "Whether to enable prevent destroying"
-  type = bool
-  default = true
-}
-
 ## CloudFront
 
 variable "cf_enabled" {
