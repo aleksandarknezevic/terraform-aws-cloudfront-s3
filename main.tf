@@ -17,6 +17,11 @@ locals {
   }
 }
 
+provider "aws" {
+  alias = "virginia"
+  region = "us-east-1"
+}
+
 # S3 bucket
 resource "aws_s3_bucket" "bucket" {
 
