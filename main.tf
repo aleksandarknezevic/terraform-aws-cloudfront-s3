@@ -166,7 +166,7 @@ resource "aws_cloudfront_distribution" "website" {
   aliases = [local.fqdn]
 
   origin {
-    domain_name = aws_s3_bucket.bucket.bucket_domain_name
+    domain_name = aws_s3_bucket.bucket.bucket_regional_domain_name
     origin_id   = format("S3-%s", local.fqdn)
 
     s3_origin_config {
