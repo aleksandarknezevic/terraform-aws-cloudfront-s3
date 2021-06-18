@@ -192,6 +192,20 @@ resource "aws_cloudfront_distribution" "website" {
     minimum_protocol_version = var.cf_minimum_protocol_version
   }
 
+  custom_error_response {
+    error_code = 403
+    error_caching_min_ttl = 300
+    response_code = 200
+    response_page_path = format("/%s", var.s3_index_document)
+  }
+
+  custom_error_response {
+    error_code = 404
+    error_caching_min_ttl = 300
+    response_code = 200
+    response_page_path = format("/%s", var.s3_index_document)
+  }
+
   logging_config {
     bucket          = var.cf_logging_bucket
     include_cookies = var.cf_include_cookies
