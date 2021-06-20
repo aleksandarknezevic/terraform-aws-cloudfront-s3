@@ -1,6 +1,6 @@
 # Locals
 locals {
-  fqdn = join(".", [var.hostname, var.domain_name])
+  fqdn = var.hostname == "" ? var.domain_name : join(".", [var.hostname, var.domain_name])
   content_type_map = {
     html = "text/html",
     js   = "application/javascript",
