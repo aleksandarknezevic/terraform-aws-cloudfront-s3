@@ -21,3 +21,8 @@ output "bucket_domain_name" {
   value = aws_s3_bucket.bucket.bucket_domain_name
   description = "Domain name of the backend S3 bucket"
 }
+
+output "cloudfront_distribution" {
+  value = aws_cloudfront_distribution.website
+  description = "Distribution as an output"
+}
