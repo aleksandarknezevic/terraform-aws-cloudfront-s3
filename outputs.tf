@@ -23,6 +23,6 @@ output "bucket_domain_name" {
 }
 
 output "cloudfront_distribution" {
-  value = aws_cloudfront_distribution.website
-  description = "Distribution as an output"
+  value = aws_cloudfront_distribution.website.id
+  description = "CF Distribution ID"
 }
