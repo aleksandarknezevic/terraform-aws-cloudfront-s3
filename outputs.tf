@@ -22,7 +22,7 @@ output "bucket_domain_name" {
   description = "Domain name of the backend S3 bucket"
 }
 
-output "cloudfront_distribution" {
+output "cloudfront_distribution_id" {
   value = aws_cloudfront_distribution.website.id
   description = "CF Distribution ID"
 }
