@@ -124,6 +124,7 @@ variable "cf_geo_restrictions" {
 variable "cf_logging_bucket" {
   description = "Name of bucket with domain for logs (don't forget domain)"
   type        = string
+  default = ""
 }
 
 variable "cf_logging_prefix" {
