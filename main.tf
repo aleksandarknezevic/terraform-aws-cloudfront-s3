@@ -206,11 +206,11 @@ resource "aws_cloudfront_distribution" "website" {
     response_page_path = format("/%s", var.s3_index_document)
   }
 
-  logging_config {
-    bucket          = var.cf_logging_bucket
-    include_cookies = var.cf_include_cookies
-    prefix          = var.cf_logging_prefix
-  }
+//  logging_config {
+//    bucket          = var.cf_logging_bucket
+//    include_cookies = var.cf_include_cookies
+//    prefix          = var.cf_logging_prefix
+//  }
 
   tags = {
     Name = local.fqdn
