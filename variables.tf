@@ -123,27 +123,9 @@ variable "cf_geo_restrictions" {
 ### logging
 
 variable "cf_logging" {
-  description = "Map for restriction"
+  description = "Map for restriction. You can define key bucket and set bucket name for logging, key include_cookies in order to include cookies in logs (default is false), and key prefix for prefix for storing logs in bucket (default is "/")"
   type = any
   default = {}
-}
-
-variable "cf_logging_bucket" {
-  description = "Name of bucket with domain for logs (don't forget domain)"
-  type        = string
-  default = ""
-}
-
-variable "cf_logging_prefix" {
-  description = "Prefix for storing logs"
-  type        = string
-  default = ""
-}
-
-variable "cf_include_cookies" {
-  description = "Enabled cookies in logging"
-  type        = bool
-  default     = false
 }
 
 ## Certificate
