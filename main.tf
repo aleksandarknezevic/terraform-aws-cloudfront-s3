@@ -209,9 +209,9 @@ resource "aws_cloudfront_distribution" "website" {
   dynamic "logging_config" {
     for_each = var.cf_logging
     content {
-      bucket = cf_logging.value["bucket"]
-      include_cookies = lookup(cf_logging, include_cookies, false)
-      prefix = lookup(cf_logging, prefix, "/")
+      bucket = var.cf_logging["bucket"]
+      include_cookies = lookup(var.cf_logging, "include_cookies", false)
+      prefix = lookup(var.cf_logging, "prefix", "/")
     }
   }
 
