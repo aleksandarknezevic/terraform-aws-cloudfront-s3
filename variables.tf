@@ -123,7 +123,7 @@ variable "cf_geo_restrictions" {
 ### logging
 
 variable "cf_logging" {
-  description = "Map for restriction. You can define key bucket and set bucket name for logging, key include_cookies in order to include cookies in logs (default is false), and key prefix for prefix for storing logs in bucket (default is "/")"
+  description = "Map for restriction. You can define key bucket and set bucket name for logging, key include_cookies in order to include cookies in logs (default is false), and key prefix for prefix for storing logs in bucket (default is '/')"
   type = any
   default = {}
 }
