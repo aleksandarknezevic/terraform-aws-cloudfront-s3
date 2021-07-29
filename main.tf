@@ -1,6 +1,7 @@
 # Locals
 locals {
   fqdn = var.hostname == "" ? var.domain_name : join(".", [var.hostname, var.domain_name])
+  logging_counter = var.cf_logging == {} ? 0 : 1
   content_type_map = {
     html = "text/html",
     js   = "application/javascript",
@@ -207,7 +208,7 @@ resource "aws_cloudfront_distribution" "website" {
   }
 
   dynamic "logging_config" {
-    for_each = var.cf_logging
+    for_each = local.logging_counter
     content {
       bucket = var.cf_logging["bucket"]
       include_cookies = lookup(var.cf_logging, "include_cookies", false)
