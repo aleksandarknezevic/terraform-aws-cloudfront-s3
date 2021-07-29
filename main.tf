@@ -1,7 +1,7 @@
 # Locals
 locals {
   fqdn = var.hostname == "" ? var.domain_name : join(".", [var.hostname, var.domain_name])
-  logging_counter = var.cf_logging == {} ? 0 : 1
+  logging_counter = var.cf_logging == {} ? [] : [""]
   content_type_map = {
     html = "text/html",
     js   = "application/javascript",
