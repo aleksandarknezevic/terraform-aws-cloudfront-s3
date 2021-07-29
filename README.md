@@ -50,10 +50,8 @@ No modules.
 | <a name="input_cf_enabled"></a> [cf\_enabled](#input\_cf\_enabled) | Whether if cf is enabled | `bool` | `true` | no |
 | <a name="input_cf_geo_restrictions"></a> [cf\_geo\_restrictions](#input\_cf\_geo\_restrictions) | Map for restriction | `any` | `{}` | no |
 | <a name="input_cf_http_version"></a> [cf\_http\_version](#input\_cf\_http\_version) | HTTP version for cf | `string` | `"http2"` | no |
-| <a name="input_cf_include_cookies"></a> [cf\_include\_cookies](#input\_cf\_include\_cookies) | Enabled cookies in logging | `bool` | `false` | no |
 | <a name="input_cf_is_ipv6_enabled"></a> [cf\_is\_ipv6\_enabled](#input\_cf\_is\_ipv6\_enabled) | Whether if ipv6 is enabled | `bool` | `true` | no |
-| <a name="input_cf_logging_bucket"></a> [cf\_logging\_bucket](#input\_cf\_logging\_bucket) | Name of bucket with domain for logs (don't forget domain) | `string` | n/a | yes |
-| <a name="input_cf_logging_prefix"></a> [cf\_logging\_prefix](#input\_cf\_logging\_prefix) | Prefix for storing logs | `string` | `""` | no |
+| <a name="input_cf_logging"></a> [cf\_logging](#input\_cf\_logging) | Map for restriction. You can define key bucket and set bucket name for logging, key include\_cookies in order to include cookies in logs (default is false), and key prefix for prefix for storing logs in bucket (default is '/') | `any` | `{}` | no |
 | <a name="input_cf_max_ttl"></a> [cf\_max\_ttl](#input\_cf\_max\_ttl) | Max ttl for caching | `number` | `86400` | no |
 | <a name="input_cf_min_ttl"></a> [cf\_min\_ttl](#input\_cf\_min\_ttl) | Min ttl for caching | `number` | `0` | no |
 | <a name="input_cf_minimum_protocol_version"></a> [cf\_minimum\_protocol\_version](#input\_cf\_minimum\_protocol\_version) | Minimum protocol version for SSL | `string` | `"TLSv1.2_2019"` | no |
@@ -77,3 +75,4 @@ No modules.
 | <a name="output_bucket_arn"></a> [bucket\_arn](#output\_bucket\_arn) | ARN of the backend S3 bucket |
 | <a name="output_bucket_domain_name"></a> [bucket\_domain\_name](#output\_bucket\_domain\_name) | Domain name of the backend S3 bucket |
 | <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of the backend S3 bucket |
+| <a name="output_cloudfront_distribution_id"></a> [cloudfront\_distribution\_id](#output\_cloudfront\_distribution\_id) | CF Distribution ID |
