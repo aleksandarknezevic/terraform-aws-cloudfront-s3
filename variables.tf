@@ -19,8 +19,8 @@ variable "module_enabled" {
 
 variable "module_depends_on" {
   description = "List of resources which module depends on"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 ## S3
@@ -116,35 +116,35 @@ variable "cf_max_ttl" {
 
 variable "cf_geo_restrictions" {
   description = "Map for restriction"
-  type = any
-  default = {}
+  type        = any
+  default     = {}
 }
 
 ### logging
 
 variable "cf_logging" {
   description = "Map for restriction. You can define key bucket and set bucket name for logging, key include_cookies in order to include cookies in logs (default is false), and key prefix for prefix for storing logs in bucket (default is '/')"
-  type = any
-  default = {}
+  type        = any
+  default     = {}
 }
 
 ## Certificate
 variable "cf_minimum_protocol_version" {
   description = "Minimum protocol version for SSL"
-  type = string
-  default = "TLSv1.2_2019"
+  type        = string
+  default     = "TLSv1.2_2019"
 }
 
 variable "cf_ssl_support_method" {
   description = "SSL support method for CloudFront"
-  type = string
-  default = "sni-only"
+  type        = string
+  default     = "sni-only"
 }
 
 # CloudFront Origin
 variable "cf_origin_access_identity_comment" {
   description = "Comment for CloudFront Identity"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 

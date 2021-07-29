@@ -1,6 +1,6 @@
 # Locals
 locals {
-  fqdn = var.hostname == "" ? var.domain_name : join(".", [var.hostname, var.domain_name])
+  fqdn            = var.hostname == "" ? var.domain_name : join(".", [var.hostname, var.domain_name])
   logging_counter = var.cf_logging == {} ? [] : [""]
   content_type_map = {
     html = "text/html",
@@ -60,8 +60,8 @@ data "aws_iam_policy_document" "s3_policy" {
 
 resource "aws_s3_bucket_policy" "s3_policy_attach" {
 
-  bucket = aws_s3_bucket.bucket.id
-  policy = data.aws_iam_policy_document.s3_policy.json
+  bucket     = aws_s3_bucket.bucket.id
+  policy     = data.aws_iam_policy_document.s3_policy.json
   depends_on = [var.module_depends_on]
 }
 
@@ -99,11 +99,11 @@ data "aws_route53_zone" "zone" {
 
 # SSL certificate
 resource "aws_acm_certificate" "certificate" {
-  provider = aws.virginia
+  provider                  = aws.virginia
   domain_name               = local.fqdn
   subject_alternative_names = [format("*.%s", local.fqdn)]
   validation_method         = "DNS"
-  depends_on = [var.module_depends_on]
+  depends_on                = [var.module_depends_on]
 }
 
 ## SSL certificate validation
@@ -127,17 +127,17 @@ resource "aws_route53_record" "validation" {
 }
 
 resource "aws_acm_certificate_validation" "validation" {
-  provider = aws.virginia
+  provider                = aws.virginia
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
-  depends_on = [aws_acm_certificate.certificate]
+  depends_on              = [aws_acm_certificate.certificate]
 }
 
 # CloudFront
 
 resource "aws_cloudfront_origin_access_identity" "cf-identity" {
 
-  comment = var.cf_origin_access_identity_comment
+  comment    = var.cf_origin_access_identity_comment
   depends_on = [var.module_depends_on]
 }
 
@@ -194,25 +194,25 @@ resource "aws_cloudfront_distribution" "website" {
   }
 
   custom_error_response {
-    error_code = 403
+    error_code            = 403
     error_caching_min_ttl = 300
-    response_code = 200
-    response_page_path = format("/%s", var.s3_index_document)
+    response_code         = 200
+    response_page_path    = format("/%s", var.s3_index_document)
   }
 
   custom_error_response {
-    error_code = 404
+    error_code            = 404
     error_caching_min_ttl = 300
-    response_code = 200
-    response_page_path = format("/%s", var.s3_index_document)
+    response_code         = 200
+    response_page_path    = format("/%s", var.s3_index_document)
   }
 
   dynamic "logging_config" {
     for_each = local.logging_counter
     content {
-      bucket = var.cf_logging["bucket"]
+      bucket          = var.cf_logging["bucket"]
       include_cookies = lookup(var.cf_logging, "include_cookies", false)
-      prefix = lookup(var.cf_logging, "prefix", "/")
+      prefix          = lookup(var.cf_logging, "prefix", "/")
     }
   }
 
