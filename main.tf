@@ -207,7 +207,7 @@ resource "aws_cloudfront_distribution" "website" {
     response_page_path    = format("/%s", var.s3_index_document)
   }
 
-  web_acl_id = null
+  web_acl_id = var.cf_web_acl_id
 
   dynamic "logging_config" {
     for_each = local.logging_counter

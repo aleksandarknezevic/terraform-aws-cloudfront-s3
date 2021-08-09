@@ -112,6 +112,12 @@ variable "cf_max_ttl" {
   default     = 86400
 }
 
+variable "cf_web_acl_id" {
+  description = "WEB ACL ID if we want WAF on CF"
+  type        = string
+  default     = null
+}
+
 ### Restrictions
 
 variable "cf_geo_restrictions" {
