@@ -48,12 +48,30 @@ resource "aws_s3_bucket" "bucket" {
 
 data "aws_iam_policy_document" "s3_policy" {
   statement {
+    sid = "prvi"
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.bucket.arn}/*"]
 
     principals {
       type        = "AWS"
       identifiers = [aws_cloudfront_origin_access_identity.cf-identity.iam_arn]
+    }
+  }
+  statement {
+    actions = [
+      "s3:GetObject",
+      "s3:PutObjectTagging"
+    ]
+
+    resources = ["${aws_s3_bucket.bucket.arn}/*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "s3:ExistingObjectTag/av-status"
+
+      values = [
+        "INFECTED"
+      ]
     }
   }
 }
