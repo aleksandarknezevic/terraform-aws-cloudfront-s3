@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "s3_policy" {
   statement {
 
     sid = "2"
-
+    effect = "Deny"
     actions = [
       "s3:GetObject",
       "s3:PutObjectTagging"
@@ -68,6 +68,10 @@ data "aws_iam_policy_document" "s3_policy" {
 
     resources = ["${aws_s3_bucket.bucket.arn}/*"]
 
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
     condition {
       test     = "StringEquals"
       variable = "s3:ExistingObjectTag/av-status"
