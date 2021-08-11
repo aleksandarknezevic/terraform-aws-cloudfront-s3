@@ -48,7 +48,7 @@ resource "aws_s3_bucket" "bucket" {
 
 data "aws_iam_policy_document" "s3_policy" {
   statement {
-    sid = "prvi"
+    sid = "1"
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.bucket.arn}/*"]
 
@@ -58,6 +58,9 @@ data "aws_iam_policy_document" "s3_policy" {
     }
   }
   statement {
+
+    sid = "2"
+
     actions = [
       "s3:GetObject",
       "s3:PutObjectTagging"
