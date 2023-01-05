@@ -19,9 +19,16 @@ locals {
 }
 
 # S3 bucket
+resource "random_string" "random_suffix" {
+  length  = 3
+  special = false
+  upper   = false
+  numeric = false
+}
+
 resource "aws_s3_bucket" "bucket" {
 
-  bucket = replace(local.fqdn, ".", "-")
+  bucket = format("%s-%s", replace(local.fqdn, ".", "-"), random_string.random_suffix)
   acl    = var.s3_acl
   versioning {
     enabled = var.s3_versioning
@@ -40,7 +47,7 @@ resource "aws_s3_bucket" "bucket" {
   }
 
   tags = {
-    "Name" = replace(local.fqdn, ".", "-")
+    "Name" = format("%s-%s", replace(local.fqdn, ".", "-"), random_string.random_suffix)
   }
 
   depends_on = [var.module_depends_on]
