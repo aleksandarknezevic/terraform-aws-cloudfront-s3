@@ -47,7 +47,7 @@ resource "aws_s3_bucket" "bucket" {
   }
 
   tags = {
-    "Name" = format("%s-%s", replace(local.fqdn, ".", "-"), random_string.random_suffix)
+    "Name" = format("%s-%s", replace(local.fqdn, ".", "-"), random_string.random_suffix.result)
   }
 
   depends_on = [var.module_depends_on]
