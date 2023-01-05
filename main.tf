@@ -28,7 +28,7 @@ resource "random_string" "random_suffix" {
 
 resource "aws_s3_bucket" "bucket" {
 
-  bucket = format("%s-%s", replace(local.fqdn, ".", "-"), random_string.random_suffix)
+  bucket = format("%s-%s", replace(local.fqdn, ".", "-"), random_string.random_suffix.result)
   acl    = var.s3_acl
   versioning {
     enabled = var.s3_versioning
