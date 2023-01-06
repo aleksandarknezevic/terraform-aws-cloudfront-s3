@@ -196,7 +196,7 @@ resource "aws_cloudfront_distribution" "website" {
     max_ttl     = var.cf_max_ttl
   }
 
-  #aliases = [local.fqdn]
+  aliases = [local.fqdn]
 
   origin {
     domain_name = aws_s3_bucket.bucket.bucket_regional_domain_name
